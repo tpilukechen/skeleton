@@ -553,14 +553,14 @@ GPIO_CONFIG['FSI_DATA']   =   { 'gpio_pin': 'A5', 'direction': 'out' }
 GPIO_CONFIG['FSI_ENABLE'] =   { 'gpio_pin': 'D0', 'direction': 'out' }
 GPIO_CONFIG['POWER_PIN']  =   { 'gpio_pin': 'E1', 'direction': 'out'  }
 GPIO_CONFIG['CRONUS_SEL'] =   { 'gpio_pin': 'A6', 'direction': 'out'  }
-GPIO_CONFIG['PGOOD']      =   { 'gpio_pin': 'C7', 'direction': 'in'  }
-GPIO_CONFIG['POWER_BUTTON'] = { 'gpio_pin': 'E0', 'direction': 'both' }
+GPIO_CONFIG['PGOOD']      =   { 'gpio_pin': 'E0', 'direction': 'in'  }
+GPIO_CONFIG['POWER_BUTTON'] = { 'gpio_pin': 'R1', 'direction': 'in' }
 GPIO_CONFIG['PCIE_RESET']   = { 'gpio_pin': 'B5', 'direction': 'out' }
 GPIO_CONFIG['USB_RESET']    = { 'gpio_pin': 'B6', 'direction': 'out' }
 
-GPIO_CONFIG['IDBTN']       = { 'gpio_pin': 'Q7', 'direction': 'out' }
+GPIO_CONFIG['IDBTN']       = { 'gpio_pin': 'D6', 'direction': 'out' }
 GPIO_CONFIG['BMC_THROTTLE']       = { 'gpio_pin': 'J3', 'direction': 'out' }
-GPIO_CONFIG['RESET_BUTTON']       = { 'gpio_pin': 'E2', 'direction': 'both' }
+GPIO_CONFIG['RESET_BUTTON']       = { 'gpio_pin': 'R2', 'direction': 'in' }
 GPIO_CONFIG['CPLD_TCK']    	  =   { 'gpio_pin': 'P0', 'direction': 'out' }
 GPIO_CONFIG['CPLD_TDO']    	  =   { 'gpio_pin': 'P1', 'direction': 'out' }
 GPIO_CONFIG['CPLD_TDI']    	  =   { 'gpio_pin': 'P2', 'direction': 'out' }
@@ -575,6 +575,7 @@ GPIO_CONFIG['SLOT1_PRESENT'] =         { 'gpio_pin': 'N4', 'direction': 'in' }
 GPIO_CONFIG['SLOT2_PRESENT'] =         { 'gpio_pin': 'N5', 'direction': 'in' }
 GPIO_CONFIG['MEZZ0_PRESENT'] =         { 'gpio_pin': 'O0', 'direction': 'in' }
 GPIO_CONFIG['MEZZ1_PRESENT'] =         { 'gpio_pin': 'O1', 'direction': 'in' }
+GPIO_CONFIG['LIVE_LED'] =              { 'gpio_pin': 'Y0', 'direction': 'out' }
 
 def convertGpio(name):
 	name = name.upper()
@@ -586,9 +587,14 @@ def convertGpio(name):
 
 
 HWMON_CONFIG = {
-	'0-004a' :  {
+	'1-009e' :  {
 		'names' : {
-			'temp1_input' : { 'object_path' : 'temperature/ambient','poll_interval' : 5000,'scale' : 1000,'units' : 'C' },
+			'SYS_1_Temp' : { 'object_path' : 'temperature/sys_1_temp','poll_interval' : 5000,'scale' : 1000,'units' : 'C' },
+		}
+	},
+    '1-009c' :  {
+		'names' : {
+			'SYS_2_Temp' : { 'object_path' : 'temperature/sys_2_temp','poll_interval' : 5000,'scale' : 1000,'units' : 'C' },
 		}
 	},
 	'6-002d' : {
