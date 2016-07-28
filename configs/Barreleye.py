@@ -1,8 +1,6 @@
 #! /usr/bin/python
 
 HOME_PATH = './'
-CACHE_PATH = '/var/cache/obmc/'
-FLASH_DOWNLOAD_PATH = "/tmp"
 GPIO_BASE = 320
 SYSTEM_NAME = "Barreleye"
 

@@ -19,7 +19,6 @@ class SensorManager(DbusProperties,DbusObjectManager):
 		DbusProperties.__init__(self)
 		DbusObjectManager.__init__(self)
 		dbus.service.Object.__init__(self,bus,name)
-		self.InterfacesAdded(name,self.properties)
 
 	@dbus.service.method(DBUS_NAME,
 		in_signature='ss', out_signature='')
@@ -45,7 +44,6 @@ class SensorManager(DbusProperties,DbusObjectManager):
 if __name__ == '__main__':
 	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 	bus = get_dbus()
-	name = dbus.service.BusName(DBUS_NAME,bus)
 	root_sensor = SensorManager(bus,OBJ_PATH)
 
 
@@ -60,6 +58,9 @@ if __name__ == '__main__':
 		root_sensor.add(obj_path, sensor_obj)
 
 	mainloop = gobject.MainLoop()
+
+	root_sensor.unmask_signals()
+	name = dbus.service.BusName(DBUS_NAME,bus)
 	print "Starting sensor manager"
 	mainloop.run()
 

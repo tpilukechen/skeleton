@@ -13,7 +13,6 @@ from obmc.dbuslib.bindings import get_dbus, DbusProperties, DbusObjectManager
 
 DBUS_NAME = 'org.openbmc.control.BmcFlash'
 OBJ_NAME = '/org/openbmc/control/flash/bmc'
-FLASH_INTF = 'org.openbmc.Flash'
 DOWNLOAD_INTF = 'org.openbmc.managers.Download'
 
 BMC_DBUS_NAME = 'org.openbmc.control.Bmc'
@@ -48,8 +47,6 @@ class BmcFlashControl(DbusProperties,DbusObjectManager):
 
 		self.update_process = None
 		self.progress_name = None
-
-		self.InterfacesAdded(name,self.properties)
 
 
 	@dbus.service.method(DBUS_NAME,
@@ -294,9 +291,11 @@ if __name__ == '__main__':
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
     bus = get_dbus()
-    name = dbus.service.BusName(DBUS_NAME, bus)
     obj = BmcFlashControl(bus, OBJ_NAME)
     mainloop = gobject.MainLoop()
+
+    obj.unmask_signals()
+    name = dbus.service.BusName(DBUS_NAME, bus)
     
     print "Running Bmc Flash Control"
     mainloop.run()

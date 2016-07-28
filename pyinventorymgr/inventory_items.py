@@ -21,7 +21,6 @@ class Inventory(DbusProperties,DbusObjectManager):
 		DbusProperties.__init__(self)
 		DbusObjectManager.__init__(self)
 		dbus.service.Object.__init__(self,bus,name)
-		self.InterfacesAdded(name,self.properties)
 
 
 class InventoryItem(DbusProperties):
@@ -87,6 +86,7 @@ if __name__ == '__main__':
 		version = getVersion()
 		obj.update({'version': version})
 
+    obj_parent.unmask_signals()
     name = dbus.service.BusName(DBUS_NAME,bus)
     print "Running Inventory Manager"
     mainloop.run()

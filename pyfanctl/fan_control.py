@@ -36,7 +36,6 @@ class FanControl(DbusProperties,DbusObjectManager):
 			print "Initializing fan: "+fan
 			obj = bus.get_object(FAN_BUS,fan,introspect=False)
 			self.fan_intf.append(dbus.Interface(obj,FAN_IFACE))
-		self.InterfacesAdded(name,self.properties)
 			
 	@dbus.service.method(DBUS_NAME,
 		in_signature='', out_signature='')
@@ -50,11 +49,13 @@ if __name__ == '__main__':
 	
 	dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 	bus = get_dbus()
-	name = dbus.service.BusName(DBUS_NAME,bus)
 	fan_control = FanControl(bus,OBJ_PATH)
 	mainloop = gobject.MainLoop()
    
 	print "Starting fan control"
 	fan_control.setMax()
+
+	fan_control.unmask_signals()
+	name = dbus.service.BusName(DBUS_NAME,bus)
 	mainloop.run()
 
