@@ -69,9 +69,9 @@ ENTER_STATE_CALLBACK = {
 
 	},
 	'BMC_READY' : {
-		'setOn' : {
+		'setBlinkSlow' : {
 			'bus_name'   : 'org.openbmc.control.led',
-			'obj_name'   : '/org/openbmc/control/led/beep',
+			'obj_name'   : '/org/openbmc/control/led/heartbeat',
 			'interface_name' : 'org.openbmc.Led',
 		},
 		'init' : {
@@ -550,17 +550,17 @@ ID_LOOKUP = {
 GPIO_CONFIG = {}
 GPIO_CONFIG['FSI_CLK']    =   { 'gpio_pin': 'A4', 'direction': 'out' }
 GPIO_CONFIG['FSI_DATA']   =   { 'gpio_pin': 'A5', 'direction': 'out' }
-GPIO_CONFIG['FSI_ENABLE'] =   { 'gpio_pin': 'D0', 'direction': 'out' }
-GPIO_CONFIG['POWER_PIN']  =   { 'gpio_pin': 'E1', 'direction': 'out'  }
+GPIO_CONFIG['FSI_ENABLE'] =   { 'gpio_pin': 'D7', 'direction': 'out' }
+GPIO_CONFIG['POWER_PIN']  =   { 'gpio_pin': 'R1', 'direction': 'out'  }
 GPIO_CONFIG['CRONUS_SEL'] =   { 'gpio_pin': 'A6', 'direction': 'out'  }
 GPIO_CONFIG['PGOOD']      =   { 'gpio_pin': 'E0', 'direction': 'in'  }
-GPIO_CONFIG['POWER_BUTTON'] = { 'gpio_pin': 'R1', 'direction': 'in' }
+GPIO_CONFIG['POWER_BUTTON'] = { 'gpio_pin': 'D0', 'direction': 'in' }
 GPIO_CONFIG['PCIE_RESET']   = { 'gpio_pin': 'B5', 'direction': 'out' }
 GPIO_CONFIG['USB_RESET']    = { 'gpio_pin': 'B6', 'direction': 'out' }
 
-GPIO_CONFIG['IDBTN']       = { 'gpio_pin': 'D6', 'direction': 'out' }
+GPIO_CONFIG['IDBTN']       = { 'gpio_pin': 'D7', 'direction': 'out' }
 GPIO_CONFIG['BMC_THROTTLE']       = { 'gpio_pin': 'J3', 'direction': 'out' }
-GPIO_CONFIG['RESET_BUTTON']       = { 'gpio_pin': 'R2', 'direction': 'in' }
+GPIO_CONFIG['RESET_BUTTON']       = { 'gpio_pin': 'D2', 'direction': 'in' }
 GPIO_CONFIG['CPLD_TCK']    	  =   { 'gpio_pin': 'P0', 'direction': 'out' }
 GPIO_CONFIG['CPLD_TDO']    	  =   { 'gpio_pin': 'P1', 'direction': 'out' }
 GPIO_CONFIG['CPLD_TDI']    	  =   { 'gpio_pin': 'P2', 'direction': 'out' }
