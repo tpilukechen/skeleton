@@ -29,8 +29,7 @@ class InventoryItem(DbusProperties):
 		dbus.service.Object.__init__(self,bus,name)
 
 		self.name = name
-		
-		## this will load properties from cache
+
 		if (data.has_key('present') == False):
 			data['present'] = 'False'
 		if (data.has_key('fault') == False):
@@ -39,23 +38,28 @@ class InventoryItem(DbusProperties):
 			data['version'] = ''
 
 		self.SetMultiple(INTF_NAME,data)
+
+		## this will load properties from cache
+		PropertyCacher.load(name, INTF_NAME, self.properties)
 		
 		
 	@dbus.service.method(INTF_NAME,
 		in_signature='a{sv}', out_signature='')
 	def update(self,data):
 		self.SetMultiple(INTF_NAME,data)
-		PropertyCacher.save(self.name,INTF_NAME,self.properties)
+		PropertyCacher.save(self.name, INTF_NAME, self.properties)
 
 	@dbus.service.method(INTF_NAME,
 		in_signature='s', out_signature='')
 	def setPresent(self,present):
 		self.Set(INTF_NAME,'present',present)
+		PropertyCacher.save(self.name, INTF_NAME, self.properties)
 
 	@dbus.service.method(INTF_NAME,
 		in_signature='s', out_signature='')
 	def setFault(self,fault):
 		self.Set(INTF_NAME,'fault',fault)
+		PropertyCacher.save(self.name, INTF_NAME, self.properties)
 
 
 def getVersion():
@@ -66,6 +70,7 @@ def getVersion():
 			parts = line.rstrip('\n').split('=')
 			if (parts[0] == "VERSION_ID"):
 				version = parts[1]
+				version = version.strip('"')
 	return version
 
 

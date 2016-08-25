@@ -82,7 +82,7 @@ class ChassisControlObject(DbusProperties, DbusObjectManager):
                                 dbus_interface="org.openbmc.Button",
                                 signal_name="Released",
                                 path="/org/openbmc/buttons/power0")
-        bus.add_signal_receiver(self.reset_button_signal_handler,
+        bus.add_signal_receiver(self.long_power_button_signal_handler,
                                 dbus_interface="org.openbmc.Button",
                                 signal_name="PressedLong",
                                 path="/org/openbmc/buttons/power0")
@@ -133,22 +133,6 @@ class ChassisControlObject(DbusProperties, DbusObjectManager):
         if (self.getPowerState() == 0):
             intf = self.getInterface('power_control')
             intf.setPowerState(POWER_ON)
-
-            # Determine if debug_mode is set.  If it is then we don't
-            # want to start the watchdog since debug mode
-            intfcontrol = self.getInterface('host_control')
-            intfproperties = dbus.Interface(intfcontrol,
-                                            "org.freedesktop.DBus.Properties")
-            debug_mode = intfproperties.Get('org.openbmc.control.Host',
-                                            'debug_mode')
-            if(not debug_mode):
-                intfwatchdog = self.getInterface('watchdog')
-                # Start watchdog with 30s timeout per the OpenPower Host IPMI Spec
-                #Once the host starts booting, it'll reset and refresh the timer
-                intfwatchdog.set(30000)
-                intfwatchdog.start()
-            else:
-                print "Debug mode is on, no watchdog"
         return None
 
     @dbus.service.method(DBUS_NAME,
@@ -211,15 +195,16 @@ class ChassisControlObject(DbusProperties, DbusObjectManager):
             self.powerOn()
 
     def power_button_signal_handler(self):
-        # toggle power
+        # toggle power, power-on / soft-power-off
         state = self.getPowerState()
         if state == POWER_OFF:
             self.powerOn()
         elif state == POWER_ON:
-            self.powerOff();
+            self.softPowerOff();
 
-    def reset_button_signal_handler(self):
-        self.reboot();
+    def long_power_button_signal_handler(self):
+        print "Long-press button, hard power off"
+        self.powerOff();
 
     def softreset_button_signal_handler(self):
         self.softReboot();
@@ -229,8 +214,23 @@ class ChassisControlObject(DbusProperties, DbusObjectManager):
         self.Set(DBUS_NAME, "reboot", 1)
         self.powerOff()
 
-    def emergency_shutdown_signal_handler(self):
+    def emergency_shutdown_signal_handler(self, message):
         print "Emergency Shutdown!"
+        # Log an event.
+        try:
+            # Exception happens or not, we need to power off.
+            obj = bus.get_object("org.openbmc.records.events",
+                                 "/org/openbmc/records/events",
+                                 introspect=False)
+            intf = dbus.Interface(obj, "org.openbmc.recordlog")
+            desc = message
+            sev = "critical error"
+            details = "Get emergency shutdown signal. Shutdown the host."
+            debug = dbus.ByteArray("")
+            intf.acceptBMCMessage(desc, sev, details, debug)
+        except Exception as e:
+            print "Emergency shutdown signal handler: log event error."
+            print e
         self.powerOff()
 
 
