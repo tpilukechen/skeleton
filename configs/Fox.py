@@ -601,12 +601,12 @@ def convertGpio(name):
 HWMON_CONFIG = {
 	'1-004f' :  {
 		'names' : {
-			'SYS_1_Temp' : { 'object_path' : 'temperature/sys_1_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
+			'temp1_input' : { 'object_path' : 'temperature/sys_1_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
 		}
 	},
-    '1-004e' :  {
+        '1-004e' :  {
 		'names' : {
-			'SYS_2_Temp' : { 'object_path' : 'temperature/sys_2_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
+			'temp1_input' : { 'object_path' : 'temperature/sys_2_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
 		}
 	},
 	'6-002d' : {
