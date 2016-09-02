@@ -30,7 +30,7 @@ EXIT_STATE_DEPEND = {
 		'/org/openbmc/control/power0' : 0,
 		'/org/openbmc/control/host0' : 0,
 		'/org/openbmc/control/flash/bios' : 0,
-		'/org/openbmc/sensors/speed/fan5': 0,
+		'/org/openbmc/sensors/speed/fan0': 0,
 		'/org/openbmc/inventory/system/chassis/io_board' : 0,
 	},
 	'BMC_STARTING2' : {
@@ -601,56 +601,24 @@ def convertGpio(name):
 HWMON_CONFIG = {
 	'1-004f' :  {
 		'names' : {
-			'temp1_input' : { 'object_path' : 'temperature/sys_1_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
+			'temp1_input' : { 'object_path' : 'temperature/sys_1_temp','poll_interval' : 5000,'scale' : 1000,'units' : 'C' },
 		}
 	},
         '1-004e' :  {
 		'names' : {
-			'temp1_input' : { 'object_path' : 'temperature/sys_2_temp','poll_interval' : 5000,'scale' : -3,'units' : 'C' },
+			'temp1_input' : { 'object_path' : 'temperature/sys_2_temp','poll_interval' : 5000,'scale' : 1000,'units' : 'C' },
 		}
 	},
-	'6-002d' : {
-		'names' : {
-			'pwm1' : { 'object_path' : 'speed/fan0','poll_interval' : 10000,'scale' : 1,'units' : '' },
-			'pwm2' : { 'object_path' : 'speed/fan1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'pwm3' : { 'object_path' : 'speed/fan2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in1_input' : { 'object_path' : 'voltage/P1V35_CPU0_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in2_input' : { 'object_path' : 'voltage/P0V9_CPU0_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in3_input' : { 'object_path' : 'voltage/P0V9_CPU0_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in4_input' : { 'object_path' : 'voltage/P0V9_CPU0_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in5_input' : { 'object_path' : 'voltage/P0V9_CPU0_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in6_input' : { 'object_path' : 'voltage/P1V09_CPU0_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in7_input' : { 'object_path' : 'voltage/P1V09_CPU0_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in8_input' : { 'object_path' : 'voltage/P1V09_CPU0_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in9_input' : { 'object_path' : 'voltage/P1V09_CPU0_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in10_input' : { 'object_path' : 'voltage/P0V97_CPU0','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in11_input' : { 'object_path' : 'voltage/P1V1_MEM0','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in12_input' : { 'object_path' : 'voltage/P1V35_CPU0_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in13_input' : { 'object_path' : 'voltage/P1V35_CPU0_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in14_input' : { 'object_path' : 'voltage/P1V35_CPU0_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-		}
-	},
-	'6-002e' : {
-		'names' : {
-			'pwm1' : { 'object_path' : 'speed/fan3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-			'pwm2' : { 'object_path' : 'speed/fan4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-			'pwm3' : { 'object_path' : 'speed/fan5','poll_interval' : 10000,'scale' : 1,'units' : '' },
-   			'in1_input' : { 'object_path' : 'voltage/P1V35_CPU1_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in2_input' : { 'object_path' : 'voltage/P0V9_CPU1_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in3_input' : { 'object_path' : 'voltage/P0V9_CPU1_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in4_input' : { 'object_path' : 'voltage/P0V9_CPU1_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in5_input' : { 'object_path' : 'voltage/P0V9_CPU1_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in6_input' : { 'object_path' : 'voltage/P1V09_CPU1_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in7_input' : { 'object_path' : 'voltage/P1V09_CPU1_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in8_input' : { 'object_path' : 'voltage/P1V09_CPU1_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in9_input' : { 'object_path' : 'voltage/P1V09_CPU1_BUF4','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in10_input' : { 'object_path' : 'voltage/P0V97_CPU1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in11_input' : { 'object_path' : 'voltage/P1V1_MEM1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in12_input' : { 'object_path' : 'voltage/P1V35_CPU1_BUF1','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in13_input' : { 'object_path' : 'voltage/P1V35_CPU1_BUF2','poll_interval' : 10000,'scale' : 1,'units' : '' },
-                        'in14_input' : { 'object_path' : 'voltage/P1V35_CPU1_BUF3','poll_interval' : 10000,'scale' : 1,'units' : '' },
-		}
-         },
+        '1e786000.pwm' : {
+                'names' : {
+                        'pwm1' : { 'object_path' : 'speed/fan0', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                        'pwm2' : { 'object_path' : 'speed/fan1', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                        'pwm3' : { 'object_path' : 'speed/fan2', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                        'pwm4' : { 'object_path' : 'speed/fan3', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                        'pwm5' : { 'object_path' : 'speed/fan4', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                        'pwm6' : { 'object_path' : 'speed/fan5', 'poll_interval' : 10000, 'scale' : 1, 'units' : ''},
+                }
+        },
 	'3-0050' : {
 		'names' : {
 			'caps_curr_powercap' : { 'object_path' : 'powercap/curr_cap','poll_interval' : 10000,'scale' : 1,'units' : 'W' },
